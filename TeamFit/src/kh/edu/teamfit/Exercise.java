@@ -1,4 +1,4 @@
-package kh.edu.teamfit;
+package TeamFit2;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -89,8 +89,8 @@ public class Exercise implements Comparator<Exercise>, Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Exercise [classCode=" + classCode + ", name=" + name + ", location=" + location
-				+ ", date=" + date + ", memNum=" + memNum + ", teacherName=" + teacherName + ", price=" + price + "]";
+		return "[운동코드 = " + classCode + ", 운동 이름 = " + name + ", 장소 = " + location
+				+ ", 날짜 = " + date + ", 최대 인원 수 = " + memNum + ", 담당 강사  = " + teacherName + ", 가격 = " + price + "]";
 	}
 	@Override
 	public int compare(Exercise o1, Exercise o2) {

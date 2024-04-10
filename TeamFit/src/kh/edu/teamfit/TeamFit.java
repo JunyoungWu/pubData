@@ -1,4 +1,4 @@
-package kh.edu.teamfit;
+package TeamFit2;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -76,17 +76,22 @@ public class TeamFit {
 
 				case 2:
 					System.out.println("2. 운동 신청(리스트)");
+					System.out.println();
+					System.out.println("==================================================================================================================================================================");
+					System.out.println();
 					for(Exercise data:exerciseList) {
 						System.out.println(data);
 					}
-					System.out.println("===========================");
+					System.out.println();
+					System.out.println("==================================================================================================================================================================");
 					scan.nextLine();
+					System.out.println();
 					System.out.print("신청할 운동의 코드를 입력해주세요 > ");
 					String code = scan.nextLine();
 					for (Exercise data : exerciseList) {
 						if (data.getClassCode().equals(code)) {
 							userCart.insertExercise(data);
-						
+							System.out.println(data.getName()+" 운동이 추가 되었습니다");
 							flag = true;
 						}
 					}
@@ -199,8 +204,17 @@ public class TeamFit {
 				case 6:
 					System.out.println("6. 강사 리스트");
 					flag = false;
-					System.out.println(instructorList.toString());
+					System.out.println("====================TeamFit 강사 목록====================");
+					System.out.println();
+					for(Instructor data : instructorList) {
+						
+						System.out.println(data.toString());
+						System.out.println();
+					}
+					System.out.println(); 
+				
 					System.out.println("1대1강사를 신청하시겠습니까? (Y / N) : ");
+					System.out.println();
 					String tr = scan.next();
 					if (tr.toUpperCase().equals("Y")) {
 						System.out.println("신청할 강사의 이름을 입력해주세요");
@@ -235,19 +249,26 @@ public class TeamFit {
 						}
 					}
 					if (!isUserInstructor) {
+						System.out.println();
 						System.out.println("강사만 이용 가능한 메뉴입니다.");
 					} else {
+						System.out.println();
 						System.out.println("강사메뉴입니다");
+						System.out.println();
 						System.out.println("강사명 : " + userName + " 연락처 : " + userPNnum);
-						System.out.println("====================");
+						System.out.println();
+						System.out.println("========================================================================================================================");
 						System.out.println("담당 운동 목록");
+						System.out.println();
 						for (Exercise data : exerciseList) {
 							if (data.getTeacherName().equals(userName)) {
 								System.out.println(data);
 							}
 						}
-						System.out.println("====================");
+						System.out.println("========================================================================================================================");
+						System.out.println();
 						System.out.println("담당 학생 목록");
+						System.out.println();
 						for (User data : userList) {
 							if (data.getTeacherName().equals(userName)) {
 								System.out.println(data);
@@ -621,6 +642,7 @@ public class TeamFit {
 	    			break;
 
 	            case 2:
+	            	System.out.println();
 	    			userCart.printCart();
 	    			break;
 	            case 3:
@@ -628,7 +650,7 @@ public class TeamFit {
 	    			for (User data : userList) {
 	    			
 	    				if (data.getPnum().equals(userPNnum)) {
-	    					System.out.println(data.getTeacherName());
+	    					System.out.println("현재 내 담당 강사 : "+data.getTeacherName());
 	    					break;
 	    				}
 	    			}

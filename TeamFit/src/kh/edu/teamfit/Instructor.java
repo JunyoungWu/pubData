@@ -1,4 +1,4 @@
-package kh.edu.teamfit;
+package TeamFit2;
  
 public class Instructor extends People {
 	

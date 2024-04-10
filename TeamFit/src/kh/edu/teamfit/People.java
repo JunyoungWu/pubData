@@ -1,4 +1,4 @@
-package kh.edu.teamfit;
+package TeamFit2;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -82,7 +82,7 @@ public class People implements Comparator<People>{
 
 	@Override
 	public String toString() {
-		return "[name=" + name + ", pnum=" + pnum + ", id=" + id + ", password=" + password + "]";
+		return "[이름 = " + name + ", 연락처 = " + pnum + ", ID = " + id +  "]";
 	}
 
 	@Override

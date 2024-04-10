@@ -1,5 +1,4 @@
-package kh.edu.teamfit;
-
+package TeamFit2;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -32,7 +31,7 @@ public class ExerciseCart implements ExerciseInterface {
     // 파일에서 사용자의 운동 정보를 불러오는 메서드
     public void loadExerciseData(String userName, String pNum) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(userName+pNum + "_Exercise.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(userName+"_"+pNum + "_Exercise.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -78,12 +77,16 @@ public class ExerciseCart implements ExerciseInterface {
 	@Override
 	public void insertExercise(Exercise exercise) {
 		if(exerciselist.contains(exercise)) {
+			System.out.println();
 			System.out.println("이미 신청한 항목입니다.");
+			System.out.println();
 		}
 		else{
+			System.out.println();
 		exerciselist.add(exercise);
 		exerciseCount=exerciselist.size();	
-		System.out.println("운동이 성공적으로 추가되었습니다");
+			System.out.println();
+		
 		}
 		
 	}
@@ -95,7 +98,9 @@ public class ExerciseCart implements ExerciseInterface {
 	        Exercise exercise = iterator.next();
 	        if (exercise.getClassCode().equals(classCode)) {
 	            iterator.remove(); 
+	            System.out.println();
 	            System.out.println("운동이 성공적으로 삭제되었습니다.");
+	            System.out.println();
 	            return; 
 	        }
 	    }
@@ -117,22 +122,21 @@ public class ExerciseCart implements ExerciseInterface {
         }
         return codes;
     }
-	
 	public void printCart() {
-		System.out.println("내 운동  목록");
-		System.out.println("===================================================");
-		System.out.println("\t강의코드\t|이름\t|장소\t|날짜\t|인원 수\t|");
-	
-		for(int i = 0; i<exerciselist.size();i++) {
-			System.out.print("\t"+exerciselist.get(i).getClassCode()+"\t|");
-			System.out.print(exerciselist.get(i).getName()+"\t|");
-			System.out.print(exerciselist.get(i).getLocation()+"\t|");
-			System.out.print(exerciselist.get(i).getDate()+"\t|");
-			System.out.print(exerciselist.get(i).getMemNum()+"\t|");
-			System.out.println();
-		}
-		System.out.println("===================================================");
+	    System.out.println("=========================================================================================================================================================");
+	    System.out.printf("\t%-12s | %-12s | %-12s | %-12s | %-12s |\n", "강의코드", "이름", "장소", "날짜", "인원 수");
+	  
 
+	    for(int i = 0; i < exerciselist.size(); i++) {
+	        System.out.printf("\t%-12s | %-12s | %-12s | %-12s | %-12s |\n",
+	                exerciselist.get(i).getClassCode().substring(0, Math.min(exerciselist.get(i).getClassCode().length(), 12)),
+	                exerciselist.get(i).getName().substring(0, Math.min(exerciselist.get(i).getName().length(), 12)),
+	                exerciselist.get(i).getLocation().substring(0, Math.min(exerciselist.get(i).getLocation().length(), 12)),
+	                exerciselist.get(i).getDate().substring(0, Math.min(exerciselist.get(i).getDate().length(), 12)),
+	                exerciselist.get(i).getMemNum());
+	    }
+	    System.out.println("=========================================================================================================================================================");
 	}
+
 
 }
