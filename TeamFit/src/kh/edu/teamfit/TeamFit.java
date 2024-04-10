@@ -2,7 +2,6 @@ package kh.edu.teamfit;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,12 +33,9 @@ public class TeamFit {
 		loadInstructorData(instructorList);
 		loadPeopleData(poepleList);
 		loadUserData(userList);
-
+		
 		login();
-	
-		
-		
-		
+
 		for (;;) {
 			int numberSelection = 0;
 			for (;;) {
@@ -72,7 +68,6 @@ public class TeamFit {
 					}
 					if (!isUserInstructor) {
 						viewmypage();
-						
 					} else {
 						System.out.println("강사는 강사 메뉴를 사용해주세요");
 
@@ -91,14 +86,13 @@ public class TeamFit {
 					for (Exercise data : exerciseList) {
 						if (data.getClassCode().equals(code)) {
 							userCart.insertExercise(data);
-							System.out.println("운동이 성공적으로 추가되었습니다");
+						
 							flag = true;
 						}
 					}
 					if (flag == false) {
 						System.out.println("올바른 코드를 입력해주세요");
 					}
-					userCart.saveUserExerciseData(userName);
 					break;
 				case 3:
 
@@ -153,7 +147,6 @@ public class TeamFit {
 						if (flag == false) {
 							System.out.println("검색결과가 없습니다");
 						}
-						
 						break;
 					case 3:
 						scan.nextLine();
@@ -171,7 +164,7 @@ public class TeamFit {
 						if (flag == false) {
 							System.out.println("검색결과가 없습니다");
 						}
-						
+
 						break;
 					default:
 						System.out.println("올바른 숫자를 입력해주세요");
@@ -182,14 +175,14 @@ public class TeamFit {
 					for (Exercise data : exerciseList) {
 						if (data.getClassCode().equals(code)) {
 							userCart.insertExercise(data);
-							
+
 							flag = true;
 						}
 					}
 					if (flag == false) {
 						System.out.println("올바른 코드를 입력해주세요");
 					}
-					userCart.saveUserExerciseData(userName);
+
 					break;
 				case 4:
 					System.out.println("4.개별 운동 삭제");
@@ -198,12 +191,10 @@ public class TeamFit {
 					System.out.print("삭제할 운동의 코드를 입력해주세요");
 					String sc = scan.nextLine();
 					userCart.removeCart(sc);
-					userCart.saveUserExerciseData(userName);
 					break;
 				case 5:
 					System.out.println("5.전체 운동 삭제");
 					userCart.delAllExercise();
-					userCart.saveUserExerciseData(userName);
 					break;
 				case 6:
 					System.out.println("6. 강사 리스트");
@@ -408,7 +399,7 @@ public class TeamFit {
 			saveInstructorData(instructorList);
 			savePeopleData(poepleList);
 			saveUserData(userList);
-			
+			userCart.saveExerciseData(userName,userPNnum);
 		}
 
 	}
@@ -552,137 +543,125 @@ public class TeamFit {
 	}
 
 	private static void viewmypage() {
-		String ppnum = null;
-		System.out.println("현재 고객 정보");
-		for(User data:userList) {
-			if(data.getPnum().equals(userPNnum)) {
-				
-				ppnum = data.getPnum();
-									
-				break;
-			}
-		}
-		System.out.println("이름 : " + userName + ", 연락처 :" + ppnum);
-		int menu = 0;
-		for (;;) {
-			System.out.println("1. 정보수정 2. 내 운동 리스트 3.담당 강사 정보  4. 계정삭제");
-			System.out.print("메뉴를 선택해주세요 : ");
-			
+	    System.out.println("현재 고객 정보");
+	    System.out.println("이름 : " + userName + ", 연락처 :" + userPNnum);
+	    int menu = 0;
+	    while (true) {
+	        System.out.println("1. 정보수정 2. 내 운동 리스트 3.담당 강사 정보  4. 계정삭제 5. 메인 메뉴로 돌아가기");
+	        System.out.print("메뉴를 선택해주세요 : ");
+	        try {
+	            menu = scan.nextInt();
+	            switch (menu) {
+	            case 1:
+	    			for (;;) {
+	    				int info = 0;
+	    				for (;;) {
 
-			try {
-				menu = scan.nextInt();
-				break;
-			} catch (InputMismatchException e) {
-				System.out.println("정수를 입력해주세요");
-				scan.nextLine();
+	    					System.out.println("수정할 정보를 선택해주세요");
+	    					System.out.print("1.연락처 2. 비밀번호 3. 종료");
+	    					try {
+	    						info = scan.nextInt();
+	    						break;
+	    					} catch (InputMismatchException e) {
+	    						System.out.println("정수를 입력해주세요");
+	    						scan.nextLine();
 
-			}
-		}
-		switch (menu) {
-		case 1:
-			for (;;) {
-				int info = 0;
-				for (;;) {
+	    					}
+	    				}
+	    				switch (info) {
+	    				case 1:
+	    					scan.nextLine();
+	    					System.out.println("수정할 연락처를 입력해주세요 : ");
+	    					String npnum = scan.nextLine();
+	    					for (User data : userList) {
+	    						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
+	    							data.setPnum(npnum);
+	    							
+	    							break;
+	    						}
+	    					}
+	    					for (People data : poepleList) {
+	    						if (data.getName().equals(userName)&& data.getPnum().equals(userPNnum)) {
+	    							data.setPnum(npnum);
+	    							userPNnum = npnum;
+	    							break;
+	    						}
+	    					}
+	    					savePeopleData(poepleList);
+	    					saveUserData(userList);
+	    					
+	    					break;
+	    				case 2:
+	    					scan.nextLine();
+	    					System.out.println("수정할 비밀번호를 입력해주세요 : ");
+	    					String npw = scan.nextLine();
+	    					for (User data : userList) {
+	    						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
+	    							data.setPassword(npw);
+	    							break;
+	    						}
+	    					}
+	    					for (People data : poepleList) {
+	    						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
+	    							data.setPassword(npw);
+	    							break;
+	    						}
+	    					}
+	    					savePeopleData(poepleList);
+	    					saveUserData(userList);
+	    					break;
+	    				case 3:
+	    					break;
+	    				}
 
-					System.out.println("수정할 정보를 선택해주세요");
-					System.out.print("1.연락처 2. 비밀번호 3. 종료");
-					try {
-						info = scan.nextInt();
-						break;
-					} catch (InputMismatchException e) {
-						System.out.println("정수를 입력해주세요");
-						scan.nextLine();
+	    				if (info == 3) {
+	    					break;
+	    				}
+	    			}
+	    			break;
 
-					}
-				}
-				switch (info) {
-				case 1:
-					scan.nextLine();
-					System.out.println("수정할 연락처를 입력해주세요 : ");
-					String npnum = scan.nextLine();
-					for (User data : userList) {
-						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
-							data.setPnum(npnum);
-							userPNnum = npnum;
-							break;
-						}
-					}
-					for (People data : poepleList) {
-						if (data.getName().equals(userName)) {
-							data.setPnum(npnum);
-							userPNnum = npnum;
-							break;
-						}
-					}
-					savePeopleData(poepleList);
-					saveUserData(userList);
-					System.out.println(userList.toString());
-					break;
-				case 2:
-					scan.nextLine();
-					System.out.println("수정할 비밀번호를 입력해주세요 : ");
-					String npw = scan.nextLine();
-					for (User data : userList) {
-						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
-							data.setPassword(npw);
-							break;
-						}
-					}
-					for (People data : poepleList) {
-						if (data.getName().equals(userName) && data.getPnum().equals(userPNnum)) {
-							data.setPassword(npw);
-							break;
-						}
-					}
-					savePeopleData(poepleList);
-					saveUserData(userList);
-					break;
-				case 3:
-					break;
-				}
+	            case 2:
+	    			userCart.printCart();
+	    			break;
+	            case 3:
 
-				if (info == 3) {
-					break;
-				}
-			}
-			break;
+	    			for (User data : userList) {
+	    			
+	    				if (data.getPnum().equals(userPNnum)) {
+	    					System.out.println(data.getTeacherName());
+	    					break;
+	    				}
+	    			}
+	    			break;
+	            case 4:
+	    			Iterator<User> userIterator = userList.iterator();
+	    			boolean foundUser = false;
+	    			while (userIterator.hasNext()) {
+	    				User currentUser = userIterator.next();
+	    				if (currentUser.getName().equals(userName) && currentUser.getPnum().equals(userPNnum)) {
+	    					userIterator.remove(); // Iterator를 통해 현재 사용자를 삭제합니다.
+	    					foundUser = true;
+	    					break; // 삭제 후에는 더 이상 반복할 필요가 없으므로 반복문을 종료합니다.
+	    				}
+	    			}
 
-		case 2:
-			userCart.printCart();
-			break;
-		case 3:
-			
-			for (User data : userList) {
-				if (data.getPnum().equals(userPNnum)) {
-					System.out.println(data.getTeacherName());
-					break;
-				}
-			}
-			break;
-		case 4:
-			Iterator<User> userIterator = userList.iterator();
-			boolean foundUser = false;
-			while (userIterator.hasNext()) {
-				User currentUser = userIterator.next();
-				if (currentUser.getName().equals(userName) && currentUser.getPnum().equals(userPNnum)) {
-					userIterator.remove(); // Iterator를 통해 현재 사용자를 삭제합니다.
-					foundUser = true;
-					break; // 삭제 후에는 더 이상 반복할 필요가 없으므로 반복문을 종료합니다.
-				}
-			}
-
-			if (foundUser) {
-				System.out.println("사용자 정보가 성공적으로 삭제되었습니다.");
-			} else {
-				System.out.println("사용자 정보를 찾지 못했습니다.");
-			}
-			break;
-
-		default:
-			System.out.println("잘못된 입력입니다.");
-			break;
-		}
-
+	    			if (foundUser) {
+	    				System.out.println("사용자 정보가 성공적으로 삭제되었습니다.");
+	    			} else {
+	    				System.out.println("사용자 정보를 찾지 못했습니다.");
+	    			}
+	    			break;
+	    		case 5:
+	    			return;
+	    		default:
+	    			System.out.println("잘못된 입력입니다.");
+	    			break;
+	            }
+	        } catch (InputMismatchException e) {
+	            System.out.println("정수를 입력해주세요");
+	            scan.nextLine(); // 버퍼 비우기
+	        }
+	    }
 	}
 
 	private static void login() {
@@ -720,7 +699,7 @@ public class TeamFit {
 				System.out.println("올바르게 입력해주세요");
 			}
 		} // end of for 1
-		userCart.loadUserExerciseData(userName);
+		userCart.loadExerciseData(userName,userPNnum);
 	}
 
 	private static void signIn() {
