@@ -1,4 +1,4 @@
-package TeamFit2;
+package kh.edu.teamfit;
 
 import java.io.Serializable;
 import java.util.Comparator;

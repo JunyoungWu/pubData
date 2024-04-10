@@ -1,4 +1,5 @@
-package TeamFit2;
+package kh.edu.teamfit;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
